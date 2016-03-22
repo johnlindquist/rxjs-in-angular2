@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "system",
+    "moduleResolution": "classic",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false
+  },
+  "files": [
+    "typings/browser.d.ts",
+    "typings/browser",
+    "unscripted/ngrx.d.ts",
+    "src/main.ts"
+  ]
+}
