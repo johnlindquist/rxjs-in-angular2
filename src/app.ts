@@ -20,7 +20,7 @@ import {Clock} from './clock';
         <clock [time]="time | async"></clock>
         
         <div *ngFor="#person of people | async">
-            {{person.name}} is in {{person.time}}        
+            {{person.name}} is in {{person.time | date:'jms'}}        
         </div>
         `
 })
@@ -30,7 +30,7 @@ export class App {
 
     seconds$ = Observable
         .interval(1000)
-        .mapTo({type: SECOND, payload:3});
+        .mapTo({type: SECOND, payload:1});
 
     time;
     people;
