@@ -4,7 +4,7 @@ export const ADVANCE = 'ADVANCE';
 export const RECALL = 'RECALL';
 
 
-export const clock = (state = new Date(), {type, payload} = {type:""})=> {
+export const clock = (state = new Date(), {type, payload} = {type: ""})=> {
     const date = new Date(state.getTime());
     switch (type) {
         case SECOND:
@@ -31,11 +31,11 @@ const defaultPeople = [
 export const people = (state = defaultPeople, {type, payload})=> {
     switch (type) {
         case ADVANCE:
-            return state.map((person)=>{
-                if(payload === person){
+            return state.map((person)=> {
+                if (payload === person) {
                     return {
                         name: person.name,
-                        time: clock(person.time, {type:HOUR, payload:5})
+                        time: clock(person.time, {type: HOUR, payload: 5})
                     }
                 }
 
@@ -43,14 +43,14 @@ export const people = (state = defaultPeople, {type, payload})=> {
             });
 
         case RECALL:
-            
-            return state.map((person)=>{
+
+            return state.map((person)=> {
                 return {
                     name: person.name,
                     time: payload
                 }
             });
-        
+
         default:
             return state;
     }

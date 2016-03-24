@@ -14,7 +14,7 @@ import {Clock} from './clock';
 
 @Component({
     selector: 'app',
-    directives:[Clock],
+    directives: [Clock],
     template: `
         <input #inputNum type="number" value="0">
         <button (click)="click$.next(inputNum.value)">Update</button>
@@ -29,16 +29,16 @@ import {Clock} from './clock';
 })
 export class App {
     click$ = new Subject()
-        .map((value)=> ({type:HOUR, payload:parseInt(value)}));
+        .map((value)=> ({type: HOUR, payload: parseInt(value)}));
 
     recall$ = new Subject();
 
     person$ = new Subject()
-        .map((value)=>({payload: value, type:ADVANCE}));
-    
+        .map((value)=>({payload: value, type: ADVANCE}));
+
     seconds$ = Observable
         .interval(1000)
-        .mapTo({type: SECOND, payload:1});
+        .mapTo({type: SECOND, payload: 1});
 
     time;
     people;
@@ -48,15 +48,14 @@ export class App {
         this.people = store.select('people');
 
 
-
         Observable.merge(
             this.click$,
             this.seconds$,
             this.person$,
             this.recall$
                 .withLatestFrom(this.time, (_, y)=> y)
-                .map((time)=> ({type:RECALL, payload: time}))
-        )
+                .map((time)=> ({type: RECALL, payload: time}))
+            )
             .subscribe(store.dispatch.bind(store))
     }
 }
