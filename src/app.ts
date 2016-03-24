@@ -9,13 +9,15 @@ import 'rxjs/add/operator/mapTo';
 import {Subject} from "rxjs/Subject";
 import {Store} from '@ngrx/store';
 import {SECOND, HOUR} from './reducers';
+import {Clock} from './clock';
 
 @Component({
     selector: 'app',
+    directives:[Clock],
     template: `
         <input #inputNum type="number" value="0">
         <button (click)="click$.next(inputNum.value)">Update</button>
-        <h1>{{clock | async | date:'yMMMMEEEEdjms'}}</h1>
+        <clock [time]="time | async"></clock>
         `
 })
 export class App {
@@ -26,10 +28,10 @@ export class App {
         .interval(1000)
         .mapTo({type: SECOND, payload:3});
 
-    clock;
+    time;
 
     constructor(store:Store) {
-        this.clock = store.select('clock');
+        this.time = store.select('clock');
 
         Observable.merge(
             this.click$,
