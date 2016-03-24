@@ -13,25 +13,28 @@ import {SECOND, HOUR} from './reducers';
 @Component({
     selector: 'app',
     template: `
-        <button (click)="click$.next()">Update</button>
+        <input #inputNum type="number" value="0">
+        <button (click)="click$.next(inputNum.value)">Update</button>
         <h1>{{clock | async | date:'yMMMMEEEEdjms'}}</h1>
         `
 })
 export class App {
-    click$ = new Subject();
+    click$ = new Subject()
+        .map((value)=> ({type:HOUR, payload:parseInt(value)}));
+
+    seconds$ = Observable
+        .interval(1000)
+        .mapTo({type: SECOND, payload:3});
 
     clock;
 
     constructor(store:Store) {
         this.clock = store.select('clock');
 
-
         Observable.merge(
-            this.click$.mapTo({type:HOUR, payload:4}),
-            Observable.interval(1000).mapTo({type: SECOND, payload:3})
+            this.click$,
+            this.seconds$
         )
-            .subscribe((action)=>{
-                store.dispatch(action)
-            })
+            .subscribe(store.dispatch.bind(store))
     }
 }
