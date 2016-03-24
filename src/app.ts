@@ -7,6 +7,7 @@ import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/mapTo';
 import {Subject} from "rxjs/Subject";
+import {Store} from '@ngrx/store';
 
 @Component({
     selector: 'app',
@@ -20,24 +21,16 @@ export class App {
 
     clock;
 
-    constructor() {
-        this.clock = Observable.merge(
+    constructor(store:Store) {
+        this.clock = store.select('clock');
+
+
+        Observable.merge(
             this.click$.mapTo('hour'),
             Observable.interval(1000).mapTo('second')
         )
-            .startWith(new Date())
-            .scan((acc, curr)=> {
-                const date = new Date(acc.getTime());
-
-                if(curr === 'second'){
-                    date.setSeconds(date.getSeconds() + 1);
-                }
-
-                if(curr === 'hour'){
-                    date.setHours(date.getHours() + 1);
-                }
-
-                return date;
-            });
+            .subscribe((type)=>{
+                store.dispatch({type})
+            })
     }
 }
