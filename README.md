@@ -32,6 +32,11 @@ changes to `ngrx.d.ts`
 "index" become "@ngrx/store"
 ```
 
+$('.form-control.filename').each(function(i){
+  $('.form-control.filename')[i].value = $('.form-control.filename')[i].value.replace(/_/g, '\\');
+});
+$('.btn.btn-primary')[0].click()
 
+https://npmcdn.com/@reactivex/rxjs@5.0.0-beta.3/dist/global/Rx.js
 
-
+01 - Rendering an Observable with the Async Pipe - https://gist.run/?id=2ea9cca663c9032fb8aa
