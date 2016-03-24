@@ -27,11 +27,11 @@ export class App {
 
 
         Observable.merge(
-            this.click$.mapTo(HOUR),
-            Observable.interval(1000).mapTo(SECOND)
+            this.click$.mapTo({type:HOUR, payload:4}),
+            Observable.interval(1000).mapTo({type: SECOND, payload:3})
         )
-            .subscribe((type)=>{
-                store.dispatch({type})
+            .subscribe((action)=>{
+                store.dispatch(action)
             })
     }
 }
